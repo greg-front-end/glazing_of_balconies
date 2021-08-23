@@ -15501,19 +15501,23 @@ var modals = function modals() {
           e.preventDefault();
         }
 
-        modal.style.display = 'block'; // document.body.style.overflow = 'hidden';
+        modal.classList.add('show', 'flipInX');
+        modal.classList.remove('hide', 'flipOutX'); // document.body.style.overflow = 'hidden';
 
         document.body.classList.add('modal-open');
       });
     });
     close.addEventListener('click', function () {
-      modal.style.display = 'none'; // document.body.style.overflow = '';
+      modal.classList.add('flipOutX');
+      modal.classList.add('hide');
+      modal.classList.remove('show', 'flipInX'); // document.body.style.overflow = '';
 
       document.body.classList.remove('modal-open');
     });
     modal.addEventListener('click', function (e) {
       if (e.target === modal) {
-        modal.style.display = 'none'; // document.body.style.overflow = '';
+        modal.classList.add('hide');
+        modal.classList.remove('show', 'flipInX'); // document.body.style.overflow = '';
 
         document.body.classList.remove('modal-open');
       }
@@ -15558,7 +15562,8 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
 
   function hideTabContent() {
     content.forEach(function (item) {
-      item.style.display = 'none';
+      item.classList.add('hide');
+      item.classList.remove('show', 'fadeIn');
     });
     tab.forEach(function (item) {
       item.classList.remove(activeClass);
@@ -15567,7 +15572,8 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeCla
 
   function showTabContent() {
     var i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    content[i].style.display = 'block';
+    content[i].classList.add('show', 'fadeIn');
+    content[i].classList.remove('hide');
     tab[i].classList.add(activeClass);
   }
 

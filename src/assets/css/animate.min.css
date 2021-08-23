@@ -168,7 +168,7 @@ to{opacity:0;transform:translate3d(0,-2000px,0)}
 from{opacity:0}
 to{opacity:1}
 }
-.fadeIn{animation-name:fadeIn}
+.fadeIn{animation-name:fadeIn; animation-duration: 1.5s}
 @keyframes fadeInDown{
 from{opacity:0;transform:translate3d(0,-100%,0)}
 to{opacity:1;transform:none}
@@ -269,7 +269,7 @@ from{transform:perspective(400px) rotate3d(1,0,0,90deg);animation-timing-functio
 80%{transform:perspective(400px) rotate3d(1,0,0,-5deg)}
 to{transform:perspective(400px)}
 }
-.flipInX{-webkit-backface-visibility:visible!important;backface-visibility:visible!important;animation-name:flipInX}
+.flipInX{-webkit-backface-visibility:visible!important;backface-visibility:visible!important;animation-name:flipInX; animation-duration: 1s}
 @keyframes flipInY{
 from{transform:perspective(400px) rotate3d(0,1,0,90deg);animation-timing-function:ease-in;opacity:0}
 40%{transform:perspective(400px) rotate3d(0,1,0,-20deg);animation-timing-function:ease-in}
@@ -283,7 +283,7 @@ from{transform:perspective(400px)}
 30%{transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}
 to{transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0}
 }
-.flipOutX{animation-name:flipOutX;-webkit-backface-visibility:visible!important;backface-visibility:visible!important}
+.flipOutX{animation-name:flipOutX; animation-duration: 1s; -webkit-backface-visibility:visible!important;backface-visibility:visible!important}
 @keyframes flipOutY{
 from{transform:perspective(400px)}
 30%{transform:perspective(400px) rotate3d(0,1,0,-15deg);opacity:1}
