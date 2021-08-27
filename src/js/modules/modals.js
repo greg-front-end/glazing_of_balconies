@@ -1,9 +1,10 @@
+import closeAllModals from "./closeAllModals";
+
 const modals = () => {
     function bindModal(triggerSelector, modalSelector, closeSelector, clickCloseOverlay = true) {
         const trigger = document.querySelectorAll(triggerSelector),
             modal = document.querySelector(modalSelector),
-            close = document.querySelector(closeSelector),
-            windows = document.querySelectorAll('[data-modal]');
+            close = document.querySelector(closeSelector);
 
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -12,11 +13,7 @@ const modals = () => {
                 }
 
                 // close all modal window
-                windows.forEach(item => {
-                    item.classList.add('fadeIn');
-                    item.classList.add('hide');
-                    item.classList.remove('show');
-                }); 
+                closeAllModals('[data-modal]');
     
                 modal.classList.add('show', 'fadeIn');
                 modal.classList.remove('hide',);
@@ -27,9 +24,7 @@ const modals = () => {
 
         close.addEventListener('click', () => {
             // close all modal window
-            windows.forEach(item => {
-                item.style.display = 'none';
-            });
+            closeAllModals('[data-modal]');
 
             modal.classList.add('hide');
             modal.classList.remove('show', 'fadeIn');
@@ -39,9 +34,7 @@ const modals = () => {
         modal.addEventListener('click', (e) => {
             if (e.target === modal && clickCloseOverlay) {
                 // close all modal window
-                windows.forEach(item => {
-                    item.style.display = 'none';
-                });
+                closeAllModals('[data-modal]');
                 modal.classList.add('hide');
                 modal.classList.remove('show');
                 // document.body.style.overflow = '';
