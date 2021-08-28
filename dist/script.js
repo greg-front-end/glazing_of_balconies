@@ -18858,6 +18858,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_images__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/images */ "./src/js/modules/images.js");
+/* harmony import */ var _modules_getScrollbarSize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/getScrollbarSize */ "./src/js/modules/getScrollbarSize.js");
+
+
 
 
 
@@ -18876,6 +18880,8 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])(modalState);
   Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('.container1', deadline);
+  Object(_modules_images__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  Object(_modules_getScrollbarSize__WEBPACK_IMPORTED_MODULE_7__["default"])();
 });
 
 /***/ }),
@@ -19170,6 +19176,81 @@ var forms = function forms(state) {
 
 /***/ }),
 
+/***/ "./src/js/modules/getScrollbarSize.js":
+/*!********************************************!*\
+  !*** ./src/js/modules/getScrollbarSize.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var getScrollbarSize = function getScrollbarSize() {
+  var div = document.createElement('div');
+  div.style.width = '50px';
+  div.style.height = '50px';
+  div.style.overflowY = 'scroll';
+  div.style.visibility = 'hidden';
+  document.body.appendChild(div);
+  var scorllWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scorllWidth;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (getScrollbarSize);
+
+/***/ }),
+
+/***/ "./src/js/modules/images.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/images.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var images = function images() {
+  var imgPopup = document.createElement('div'),
+      workSection = document.querySelector('.works'),
+      bigImg = document.createElement('img'),
+      sizeS = 767.98,
+      sizeM = 991.98,
+      sizeL = 1199.98;
+  imgPopup.classList.add('popup');
+  workSection.appendChild(imgPopup);
+  imgPopup.style.justifyContent = 'center';
+  imgPopup.style.alignItems = 'center';
+  imgPopup.style.display = 'none'; // bigImg.style.maxWidth = '100%';
+
+  if (window.matchMedia("min-width: ".concat(sizeM, "px"))) {
+    bigImg.style.maxWidth = '70%';
+    bigImg.style.maxHeight = '70%';
+  }
+
+  imgPopup.appendChild(bigImg);
+  workSection.addEventListener('click', function (e) {
+    e.preventDefault();
+    var target = e.target;
+
+    if (target && target.classList.contains('preview')) {
+      imgPopup.style.display = 'flex';
+      document.body.classList.add('modal-open');
+      var path = target.parentNode.getAttribute('href');
+      bigImg.setAttribute('src', path);
+    }
+
+    if (target && target.matches('div.popup')) {
+      imgPopup.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (images);
+
+/***/ }),
+
 /***/ "./src/js/modules/modals.js":
 /*!**********************************!*\
   !*** ./src/js/modules/modals.js ***!
@@ -19182,6 +19263,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _closeAllModals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./closeAllModals */ "./src/js/modules/closeAllModals.js");
+/* harmony import */ var _getScrollbarSize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getScrollbarSize */ "./src/js/modules/getScrollbarSize.js");
+
 
 
 
@@ -19190,7 +19273,8 @@ var modals = function modals() {
     var clickCloseOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     var trigger = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector),
-        close = document.querySelector(closeSelector);
+        close = document.querySelector(closeSelector),
+        rightScroll = Object(_getScrollbarSize__WEBPACK_IMPORTED_MODULE_2__["default"])();
     trigger.forEach(function (item) {
       item.addEventListener('click', function (e) {
         if (e.target) {
@@ -19203,6 +19287,7 @@ var modals = function modals() {
         modal.classList.remove('hide'); // document.body.style.overflow = 'hidden';
 
         document.body.classList.add('modal-open');
+        document.body.style.marginRight = "".concat(rightScroll, "px");
       });
     });
     close.addEventListener('click', function () {
@@ -19212,6 +19297,7 @@ var modals = function modals() {
       modal.classList.remove('show', 'fadeIn'); // document.body.style.overflow = '';
 
       document.body.classList.remove('modal-open');
+      document.body.style.marginRight = "0px";
     });
     modal.addEventListener('click', function (e) {
       if (e.target === modal && clickCloseOverlay) {
@@ -19221,9 +19307,11 @@ var modals = function modals() {
         modal.classList.remove('show'); // document.body.style.overflow = '';
 
         document.body.classList.remove('modal-open');
+        document.body.style.marginRight = "0px";
       }
     });
-  }
+  } // open modal through 60sec
+
 
   function showModalByTime(selector, time) {
     setTimeout(function () {

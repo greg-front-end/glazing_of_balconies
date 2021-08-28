@@ -1,10 +1,12 @@
 import closeAllModals from "./closeAllModals";
+import getScrollbarSize from "./getScrollbarSize";
 
 const modals = () => {
     function bindModal(triggerSelector, modalSelector, closeSelector, clickCloseOverlay = true) {
         const trigger = document.querySelectorAll(triggerSelector),
             modal = document.querySelector(modalSelector),
-            close = document.querySelector(closeSelector);
+            close = document.querySelector(closeSelector),
+            rightScroll = getScrollbarSize();
 
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -19,6 +21,8 @@ const modals = () => {
                 modal.classList.remove('hide',);
                 // document.body.style.overflow = 'hidden';
                 document.body.classList.add('modal-open');
+
+                document.body.style.marginRight = `${rightScroll}px`;
             });
         });
 
@@ -30,6 +34,7 @@ const modals = () => {
             modal.classList.remove('show', 'fadeIn');
             // document.body.style.overflow = '';
             document.body.classList.remove('modal-open');
+            document.body.style.marginRight = `0px`;
         });
         modal.addEventListener('click', (e) => {
             if (e.target === modal && clickCloseOverlay) {
@@ -39,10 +44,12 @@ const modals = () => {
                 modal.classList.remove('show');
                 // document.body.style.overflow = '';
                 document.body.classList.remove('modal-open');
+                document.body.style.marginRight = `0px`;
             }
         });
     }
 
+    // open modal through 60sec
     function showModalByTime(selector, time) {
         setTimeout(function() {
             document.querySelector(selector).style.display = 'block';
